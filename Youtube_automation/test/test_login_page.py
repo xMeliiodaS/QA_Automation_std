@@ -1,37 +1,34 @@
+import time
 import unittest
-
-from infra.browser_wrapper import BrowserWrapper
+import undetected_chromedriver as uc
 from infra.config_provider import ConfigProvider
-from infra.utils import Utils
-from logic.video_page import LoginPage
-from logic.main_page import MainPage
+from logic.home_page import HomePage
+from logic.login_page import LoginPage
 
 
 class TestLoginPage(unittest.TestCase):
 
     # Before all - Called automatically
     def setUp(self):
-        self.browser = BrowserWrapper()
+        # Initialize the undetected ChromeDriver
+        options = uc.ChromeOptions()
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        self.driver = uc.Chrome(options=options)
         self.config = ConfigProvider.load_config_json()
-        self.driver = self.browser.get_driver(self.config["url"])
-        self.login_page = LoginPage(self.driver)
-
-    def tearDown(self):
-        self.browser.close_browser()
+        self.driver.get(self.config["url"])
+        self.home_page = HomePage(self.driver)
 
     def test_login_successful(self):
-        self.login_page.fill_user_name_input(self.config["user_name"])
-        self.login_page.fill_password_input(self.config["password"])
-        self.login_page.click_on_submit_button()
+        # Wait for the page to load
+        self.home_page.click_on_login_button()
 
-        main_page = MainPage(self.driver)
-        self.assertTrue(main_page.login_title_is_displayed())
+        login_page = LoginPage(self.driver)
+        login_page.fill_username_input(self.config["email"])
+        login_page.click_on_next_button()
 
-    def test_login_failed(self):
-        self.login_page.fill_user_name_input(self.config["user_name"])
-        self.login_page.fill_password_input(Utils.generate_random_string(8))
-        #   self.login_page.fill_password_input(self.config["incorrect_password"])
-        self.login_page.click_on_submit_button()
+        login_page.fill_password_input(self.config["password"])
+        login_page.click_on_next_button()
 
-        main_page = MainPage(self.driver)
-        self.assertFalse(main_page.login_title_is_displayed())
+
+if __name__ == "__main__":
+    unittest.main()

@@ -3,7 +3,7 @@ from logic.base_page_app import BasePageApp
 from selenium import common as c
 
 
-class LoginPage(BasePageApp):
+class VideoPage(BasePageApp):
     ADD_COMMENT_INPUT = '//div[@id="contenteditable-root"]'
     COMMENT_BUTTON = '//button[@aria-label="Comment"]'
 
@@ -16,7 +16,7 @@ class LoginPage(BasePageApp):
             print("NoSuchElementException", e)
 
     def fill_comment_input(self, user):
-        self._add_comment_input.send_key(user)
+        self._add_comment_input.send_keys(user)
 
     def click_on_comment_button(self):
         self._comment_button.click()
