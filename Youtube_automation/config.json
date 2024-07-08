@@ -1,7 +1,4 @@
 {
-  "base_url" : "https://the-internet.herokuapp.com/",
-  "browser": "Chrome",
-  "user_name": "student",
-  "password": "Password123",
-  "incorrect_password": "HeyGuys2456"
+  "base_url" : "https://www.youtube.com/",
+  "browser": "Chrome"
 }

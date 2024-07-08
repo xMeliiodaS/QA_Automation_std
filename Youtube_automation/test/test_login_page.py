@@ -3,7 +3,7 @@ import unittest
 from infra.browser_wrapper import BrowserWrapper
 from infra.config_provider import ConfigProvider
 from infra.utils import Utils
-from logic.login_page import LoginPage
+from logic.video_page import LoginPage
 from logic.main_page import MainPage
 
 
